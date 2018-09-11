@@ -1,9 +1,9 @@
 {
-  "name": "@foxer-360/react-package-boilerplate",
+  "name": "@foxer360/composer",
   "version": "0.1.0",
-  "description": "Simple boilerplate for TypeScript package with React.",
+  "description": "Composer library, used in BackOffice and Frontend.",
   "main": "lib/index.js",
-  "repository": "git@github.com:Foxer-360/react-package-boilerplate.git",
+  "repository": "git@github.com:Foxer-360/composer.git",
   "author": "Filip Suchý <nevim42@gmail.com>",
   "typings": "lib/@types",
   "license": "MIT",
@@ -20,13 +20,19 @@
     "test": "jest",
     "up": "yarn install --check-files"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@foxer-360/delta": "git+ssh://git@github.com:Foxer-360/delta.git#sandbox",
+    "antd": "^3.9.2",
+    "axios": "^0.18.0",
+    "react-frame-component": "^4.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
     "@babel/preset-typescript": "^7.0.0",
     "@types/jest": "^23.3.2",
     "@types/node": "^10.9.4",
