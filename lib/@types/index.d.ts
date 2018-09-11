@@ -1,3 +1,3 @@
-import { ILooseObject } from './types';
-declare const fce: (data: ILooseObject) => void;
-export { fce };
+import Composer from './scenes/Composer';
+import LightweightComposer from './scenes/LightweightComposer';
+export { Composer, LightweightComposer, };

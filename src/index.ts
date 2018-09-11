@@ -1,10 +1,7 @@
-import { ILooseObject } from '@source/types';
-
-const fce = (data: ILooseObject) => {
-  // tslint:disable-next-line:no-console
-  console.log('This is just test method for this package.');
-};
+import Composer from '@source/scenes/Composer';
+import LightweightComposer from '@source/scenes/LightweightComposer';
 
 export {
-  fce
+  Composer,
+  LightweightComposer,
 };
