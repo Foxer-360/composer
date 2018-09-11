@@ -63,7 +63,9 @@ class View extends React.Component<IProperties, {}> {
 
     return (
       <div className="composer-content-holder">
-        <Frame>
+        <Frame
+          componentsService={this.props.componentsService}
+        >
           {
             <div
               onDragOver={() => this.arrowHover('up')}
