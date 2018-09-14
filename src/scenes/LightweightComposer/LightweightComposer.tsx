@@ -1,12 +1,23 @@
+import { IComponentModule, IPluginModule } from '@source/types';
 import * as React from 'react';
+import Container from './components/Container';
 
-class LightweightComposer extends React.Component<{}, {}> {
+export interface IProperties {
+  // tslint:disable-next-line:no-any
+  content: any;
+
+  componentModule: IComponentModule;
+  pluginModule: IPluginModule;
+}
+
+class LightweightComposer extends React.Component<IProperties, {}> {
 
   public render(): JSX.Element {
     return (
-      <div>
-        <span>Lightweight Composer is not implemented yet.</span>
-      </div>
+      <Container
+        content={this.props.content.content}
+        componentModule={this.props.componentModule}
+      />
     );
   }
 
