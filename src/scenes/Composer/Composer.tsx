@@ -1,5 +1,5 @@
-import { builder, Delta, getObjectFromContent } from '@foxer-360/delta';
-import { IComponent, IContent, IOperation } from '@foxer-360/delta';
+import { builder, Delta, getObjectFromContent } from '@foxer360/delta';
+import { IComponent, IContent, IOperation } from '@foxer360/delta';
 import { ILooseObject } from '@source/types';
 import { Button, Card, Icon, Modal, Tabs } from 'antd';
 import * as React from 'react';
