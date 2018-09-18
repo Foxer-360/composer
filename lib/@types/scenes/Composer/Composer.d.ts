@@ -1,4 +1,4 @@
-import { IContent, IOperation } from '@foxer-360/delta';
+import { IContent, IOperation } from '@foxer360/delta';
 import { ILooseObject } from '../../types';
 import * as React from 'react';
 export interface IComponentObject {

@@ -1,4 +1,4 @@
-import { IComponent } from '@foxer-360/delta';
+import { IComponent } from '@foxer360/delta';
 import { ILooseObject } from '../../../../types';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../Composer';
