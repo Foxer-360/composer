@@ -1,4 +1,4 @@
-import { getObjectFromContent, IComponent, IContent } from '@foxer-360/delta';
+import { getObjectFromContent, IComponent, IContent } from '@foxer360/delta';
 import { ILooseObject } from '@source/types';
 import { Alert, Card, Col, Icon, Row } from 'antd';
 import * as React from 'react';

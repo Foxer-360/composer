@@ -21,7 +21,7 @@
     "up": "yarn install --check-files"
   },
   "dependencies": {
-    "@foxer-360/delta": "git+ssh://git@github.com:Foxer-360/delta.git#sandbox",
+    "@foxer360/delta": "git+https://github.com/Foxer-360/delta.git#sandbox",
     "antd": "^3.9.2",
     "axios": "^0.18.0",
     "react-frame-component": "^4.0.1"
