@@ -39,16 +39,28 @@ class ArrayInputs extends React.Component<IArrayInputsProps, IArrayInputsState> 
     });
   }
 
+  public onNewTab() {
+    const newData = [...this.props.data];
+    newData.push({});
+
+    const newTab = newData.length - 1;
+
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: newData,
+      },
+    });
+
+    this.setState({
+      activeTab: newTab
+    });
+  }
+
   public onEditTab(targetKey: string, action: string) {
     const iKey = parseInt(targetKey, 10);
     const newData = [...this.props.data];
     let newTab = this.state.activeTab;
-
-    // add new tab
-    if (action === 'add') {
-      newData.push({});
-      newTab = newData.length - 1;
-    }
 
     // remove tab
     if (action === 'remove') {
@@ -69,7 +81,9 @@ class ArrayInputs extends React.Component<IArrayInputsProps, IArrayInputsState> 
       },
     });
 
-    this.setState({ activeTab: newTab });
+    this.setState({
+      activeTab: newTab
+    });
   }
 
   // tslint:disable-next-line:no-any
@@ -100,6 +114,9 @@ class ArrayInputs extends React.Component<IArrayInputsProps, IArrayInputsState> 
   public render() {
     // tslint:disable-next-line:no-any
     const onEdit = (targetKey: string | any, action: string) => {
+      if (action === 'add') {
+        this.onNewTab();
+      }
       if (typeof targetKey === 'string') {
         this.onEditTab(targetKey, action);
       }
