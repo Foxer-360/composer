@@ -114,21 +114,21 @@ class Editor extends React.Component<IProperties, IState> {
     }
 
     let Title = (
-      <h2 style={{ paddingBottom: 0, marginBottom: 0 }}>
+      <h3 style={{ paddingBottom: 0, marginBottom: 0 }}>
         <Icon type="appstore" style={{ marginRight: '8px' }} />
         Components
-      </h2>
+      </h3>
     );
     if (this.props.selectedComponent) {
       Title = (
-        <h2 style={{ paddingBottom: 0, marginBottom: 0 }}>
+        <h3 style={{ paddingBottom: 0, marginBottom: 0 }}>
           <Icon type="edit" style={{ marginRight: '8px' }} />
           {type}
-        </h2>
+        </h3>
       );
     }
 
-    const PageName = <h2 style={{ paddingBottom: 0, marginBottom: 0 }}>{this.props.pageName}</h2>;
+    const PageName = <h3 style={{ paddingBottom: 0, marginBottom: 0 }}>{this.props.pageName}</h3>;
 
     const size = 16;
 
