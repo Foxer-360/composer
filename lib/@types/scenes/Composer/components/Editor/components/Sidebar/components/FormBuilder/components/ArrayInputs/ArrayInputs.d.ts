@@ -14,6 +14,7 @@ interface IArrayInputsState {
 declare class ArrayInputs extends React.Component<IArrayInputsProps, IArrayInputsState> {
     constructor(props: IArrayInputsProps);
     onChangeTab(key: string): void;
+    onNewTab(): void;
     onEditTab(targetKey: string, action: string): void;
     onChange(key: any): void;
     mediaLibraryChange(media: {
