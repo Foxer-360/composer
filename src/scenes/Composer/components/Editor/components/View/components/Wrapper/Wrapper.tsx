@@ -1,5 +1,5 @@
 import { ILooseObject } from '@source/types';
-import { deepCopy, deepEqual } from '@source/utils';
+import { Context, deepCopy, deepEqual } from '@source/utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../../../../../Composer';
 import UserEditor from './components/UserEditor';
@@ -25,6 +25,8 @@ export interface IProperties {
   editors?: IEditorInfo[];
   locks?: ILockInfo[];
   me?: string; // My ID used in editors and locks
+
+  context: Context;
 
   onEdit: (id: number) => Promise<boolean>;
   onRemove: (id: number) => void;
@@ -97,11 +99,17 @@ class RenderErrorCatcher extends React.Component<{}, IRenderErrorCatcherState> {
   }
 }
 
+interface IHashMap {
+  [property: string]: string;
+}
+
 /**
  * Component that wrap component in Composer content and
  * drive all component behiever, like editing or re-rendering
  */
 class Wrapper extends React.Component<IProperties, IState> {
+  private contextPropertiesHashes: IHashMap;
+
   constructor(props: IProperties) {
     super(props);
 
@@ -110,6 +118,10 @@ class Wrapper extends React.Component<IProperties, IState> {
     this.state = {
       componentContent: deepCopy(content),
       isDragging: false,
+    };
+
+    this.contextPropertiesHashes = {
+      'list': '',
     };
 
     // Bind this for some functions
@@ -133,6 +145,10 @@ class Wrapper extends React.Component<IProperties, IState> {
   public shouldComponentUpdate(nextProps: IProperties, nextState: IState) {
     // Component should update only if data will change. Otherwise re-render is
     // no neccessary
+
+    if (this.contextPropertiesHashes.list !== nextProps.context.getHashOfProperty('list')) {
+      return true;
+    }
 
     // If component is dragging
     if (this.state.isDragging !== nextState.isDragging) {
@@ -266,6 +282,13 @@ class Wrapper extends React.Component<IProperties, IState> {
       });
     }
 
+    let list = this.props.context.readProperty('list');
+    // tslint:disable-next-line:no-console
+    console.log('{CONTEXT}', this.props.context);
+    if (!list || list === undefined) {
+      list = false;
+    }
+
     return (
       <div
         style={wrapperStyle}
@@ -293,7 +316,11 @@ class Wrapper extends React.Component<IProperties, IState> {
 
         {/* There is component */}
         <RenderErrorCatcher>
-          <Comp data={this.props.content[this.props.position].data} />
+          {list ?
+            <Comp data={this.props.content[this.props.position].data} list={list} />
+            :
+            <Comp data={this.props.content[this.props.position].data} />
+          }
         </RenderErrorCatcher>
       </div>
     );

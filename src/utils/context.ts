@@ -1,5 +1,5 @@
 import { deepCopy } from '@source/utils';
-import * as createHash from 'object-hash';
+import createHash from 'object-hash';
 
 interface IStorageProperty {
   name: string;
@@ -123,10 +123,13 @@ class Context {
     let storageProperty: IStorageProperty;
     if (!this.isPropertyExists(property)) {
       storageProperty = {
+        data,
         hash,
         name: property,
         updates: 0,
       } as IStorageProperty;
+
+      this.properties.push(property);
     } else {
       storageProperty = this.storage[property];
       storageProperty.hash = hash;

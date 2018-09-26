@@ -9,8 +9,11 @@ import {
   IPluginServiceLikeClass,
 } from '@source/scenes/Composer/Composer';
 import LightweightComposer from '@source/scenes/LightweightComposer';
+import { Context } from '@source/utils';
 
 export {
+  Context,
+
   Composer,
   LightweightComposer,
 

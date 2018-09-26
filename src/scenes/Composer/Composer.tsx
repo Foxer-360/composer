@@ -1,12 +1,14 @@
 import { builder, Delta, getObjectFromContent } from '@foxer360/delta';
 import { IComponent, IContent, IOperation } from '@foxer360/delta';
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import { Button, Card, Icon, Modal, Tabs } from 'antd';
 import * as React from 'react';
 import Editor from './components/Editor';
 import Spinner from './components/Spinner';
 import Users from './components/Users';
 // import './composer.css';
+
 
 // tslint:disable:jsx-no-multiline-js
 // tslint:disable:jsx-no-lambda
@@ -37,14 +39,15 @@ export interface IComponentsServiceLikeClass {
   getForm(type: string): typeof React.Component;
 }
 
-declare class PluginComponent extends React.Component<{
-  onChange: (data: ILooseObject) => void;
-  initData: ILooseObject;
-}, {}> {};
+// declare class PluginComponent extends React.Component<{
+//   onChange: (data: ILooseObject) => void;
+//   initData: ILooseObject;
+// }, {}> {};
 
 export interface IPluginServiceLikeClass {
   getPluginTabName(name: string): string;
-  getPluginComponent(name: string): typeof PluginComponent;
+  getPluginComponent(name: string): typeof React.Component;
+  getPlugin(name: string): any; // tslint:disable-line:no-any
 }
 
 export interface IData {
@@ -82,6 +85,8 @@ export interface IProperties {
   me?: string; // My ID used in editors and locks
 
   layouts?: boolean;
+
+  context: Context;
 
   // Event handlers
   onComponentAdded?: (data: ILooseObject) => void;
@@ -176,6 +181,9 @@ class Composer extends React.Component<IProperties, IState> {
   // Spinner reference
   private spinner: Spinner = dummySpinner;
 
+  // Plugins
+  private pluginsInstances: ILooseObject;
+
   // Delta Language object
   private delta: Delta;
 
@@ -196,6 +204,8 @@ class Composer extends React.Component<IProperties, IState> {
       ...this.RESET_STATE,
       content: builder(this.delta),
     };
+
+    this.pluginsInstances = {};
 
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSave = this.handleSave.bind(this);
@@ -314,6 +324,7 @@ class Composer extends React.Component<IProperties, IState> {
                   removeContainer={this.handleRemoveContainer}
                   lockContainer={this.handleLockContainer}
                   layouts={this.props.layouts}
+                  context={this.props.context}
                 />
               </Spinner>
             </div>
@@ -332,8 +343,9 @@ class Composer extends React.Component<IProperties, IState> {
               >
                 <Card title={Title}>
                   <Plugin
-                    onChange={(data) => this.handlePluginDataChange(name, data)}
+                    onChange={(data: ILooseObject) => this.handlePluginDataChange(name, data)}
                     initData={this.state.data[name] || null}
+                    config={this.state.data[name] || null}
                   />
                 </Card>
               </Tabs.TabPane>
@@ -443,6 +455,19 @@ class Composer extends React.Component<IProperties, IState> {
     if (!Array.isArray(names)) {
       names = [ names ];
     }
+
+    names.forEach((name: string) => {
+      const Plugin = this.props.pluginService.getPlugin(name);
+      if (Plugin) {
+        this.pluginsInstances[name] = new Plugin(this.props.context);
+        this.props.context.addListener(name, () => {
+          this.forceUpdate();
+        });
+      } else {
+        // tslint:disable-next-line:no-console
+        console.log(`Plugin ${name} failed to load...`);
+      }
+    });
 
     return new Promise((resolve) => {
       this.setState({
@@ -1685,6 +1710,11 @@ class Composer extends React.Component<IProperties, IState> {
         [name]: data
       }
     });
+
+    // Write new config into plugin
+    if (this.pluginsInstances[name]) {
+      this.pluginsInstances[name].writeConfig(data);
+    }
   }
 
   /** Actions for working with content */
