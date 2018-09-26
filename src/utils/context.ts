@@ -12,27 +12,73 @@ interface IStorage {
   [property: string]: IStorageProperty;
 }
 
+type Listener = (property?: string) => void;
+
+interface IListener {
+  id: string;
+  listener: Listener;
+  pattern: string;
+}
+
 /**
  * Context class. This is something like data stream used in Composer to
  * handle context data and plugin data, etc.
  */
 class Context {
 
+  private lastListenerId: number;
+
+  private listeners: IListener[];
+
   private properties: string[];
 
   private storage: IStorage;
 
   constructor() {
+    this.lastListenerId = 0;
+    this.listeners = [] as IListener[];
     this.properties = [] as string[];
     this.storage = {} as IStorage;
   }
 
-  public addListener() {
-    // ToDo
+  /**
+   * Add listener for some pattern (matching property)
+   *
+   * @param  {string} pattern which will match property
+   * @param  {Listener} listener function
+   * @return {string} id of created listener
+   */
+  public addListener(pattern: string, listener:Listener): string {
+    const listenerObject = {
+      id: `#${this.lastListenerId}`,
+      listener,
+      pattern,
+    } as IListener;
+    this.listeners.push(listenerObject);
+    this.lastListenerId++;
+
+    return listenerObject.id;
   }
 
-  public removeListener() {
-    // ToDo
+  /**
+   * Remove listener
+   *
+   * @param  {string} id of listener, given from addListener method
+   * @return {boolean} returns true if listeren was removed, otherwise false
+   */
+  public removeListener(id: string): boolean {
+    let found = false;
+    const listeners = this.listeners.filter((item: IListener) => {
+      if (item.id === id) {
+        found = true;
+        return false;
+      }
+
+      return true;
+    });
+    this.listeners = listeners;
+
+    return found;
   }
 
   /**
@@ -95,6 +141,7 @@ class Context {
       }
     }
 
+    this.fireListeners(property);
     this.storage[property] = storageProperty;
   }
 
@@ -107,6 +154,33 @@ class Context {
   public isPropertyExists(property: string): boolean {
     const index = this.properties.indexOf(property);
     return index >= 0;
+  }
+
+  /**
+   * Simply check if pattern match property
+   *
+   * @param  {string} pattern
+   * @param  {string} property
+   * @return {boolean} returns true if match
+   */
+  private isPatternMatch(pattern: string, property: string): boolean {
+    const regex = new RegExp(`^${pattern.replace('.', '\.').replace('*', '.*')}$`, 'gi');
+    const result = regex.test(property);
+
+    return result;
+  }
+
+  /**
+   * Fire all listeners which patterns match given property
+   *
+   * @param {string} property [description]
+   */
+  private fireListeners(property: string): void {
+    this.listeners.forEach((listener: IListener) => {
+      if (this.isPatternMatch(listener.pattern, property)) {
+        listener.listener(property);
+      }
+    });
   }
 
 }
