@@ -1,5 +1,6 @@
 import { IComponent } from '@foxer360/delta';
 import { ILooseObject } from '../../../../types';
+import { Context } from '../../../../utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../Composer';
 export interface IProperties {
@@ -9,6 +10,7 @@ export interface IProperties {
     locks?: ILockInfo[];
     me?: string;
     layouts?: boolean;
+    context: Context;
     selectedComponent: number | null;
     updateComponent: (data: ILooseObject) => void;
     selectComponent: (id: number) => Promise<boolean>;

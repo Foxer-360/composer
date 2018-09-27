@@ -1,4 +1,5 @@
 import { ILooseObject } from '../../../../../../../../types';
+import { Context } from '../../../../../../../../utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../../../../../Composer';
 export interface IProperties {
@@ -12,6 +13,7 @@ export interface IProperties {
     me?: string;
     layouts?: boolean;
     locked: boolean;
+    context: Context;
     moveComponent: (id: number, position: number) => void;
     addComponent: (data: ILooseObject, position: number, container: string) => Promise<boolean>;
     onEdit: (id: number) => Promise<boolean>;
