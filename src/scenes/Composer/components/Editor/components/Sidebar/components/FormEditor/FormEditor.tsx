@@ -1,4 +1,5 @@
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import { Button, Icon } from 'antd';
 import * as React from 'react';
 import { IComponentsServiceLikeClass } from '../../../../../../Composer';
@@ -16,6 +17,8 @@ export interface IProperties {
   onCancel: () => Promise<boolean>; // Cancel, revert data
 
   componentsService: IComponentsServiceLikeClass;
+
+  context: Context;
 }
 
 class FormEditor extends React.Component<IProperties, {}> {
@@ -27,6 +30,8 @@ class FormEditor extends React.Component<IProperties, {}> {
 
     const Form = this.props.componentsService.getForm(type);
 
+    const navigations = this.props.context.readProperty('navigations');
+
     return (
       <div className={'formEditor'}>
         {formResource ?
@@ -34,11 +39,13 @@ class FormEditor extends React.Component<IProperties, {}> {
             form={formResource}
             data={this.props.data}
             onChange={this.props.onChange}
+            navigations={navigations}
           />
           :
           <Form
             data={this.props.data}
             onChange={this.props.onChange}
+            navigations={navigations}
           />
         }
 

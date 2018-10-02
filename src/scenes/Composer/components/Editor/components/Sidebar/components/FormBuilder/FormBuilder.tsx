@@ -23,6 +23,7 @@ export interface IFormSchema {
 }
 
 interface IFormBuilderProps {
+  navigations?: ILooseObject;
   form?: {
     schema: IFormSchema;
   };

@@ -187,6 +187,7 @@ class Editor extends React.Component<IProperties, IState> {
                 dragEnd={this.onDragStop}
                 addContainer={this.props.addContainer}
                 layouts={this.props.layouts}
+                context={this.props.context}
               />
             </Card>
           </Col>
