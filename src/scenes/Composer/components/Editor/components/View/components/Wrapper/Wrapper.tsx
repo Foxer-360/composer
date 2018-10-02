@@ -121,7 +121,7 @@ class Wrapper extends React.Component<IProperties, IState> {
     };
 
     this.contextPropertiesHashes = {
-      'list': '',
+      'navigations': '',
     };
 
     // Bind this for some functions
@@ -146,7 +146,7 @@ class Wrapper extends React.Component<IProperties, IState> {
     // Component should update only if data will change. Otherwise re-render is
     // no neccessary
 
-    if (this.contextPropertiesHashes.list !== nextProps.context.getHashOfProperty('list')) {
+    if (this.contextPropertiesHashes.navigations !== nextProps.context.getHashOfProperty('navigations')) {
       return true;
     }
 
@@ -282,11 +282,11 @@ class Wrapper extends React.Component<IProperties, IState> {
       });
     }
 
-    let list = this.props.context.readProperty('list');
+    let navigations = this.props.context.readProperty('navigations');
     // tslint:disable-next-line:no-console
     console.log('{CONTEXT}', this.props.context);
-    if (!list || list === undefined) {
-      list = false;
+    if (!navigations || navigations === undefined) {
+      navigations = false;
     }
 
     return (
@@ -316,8 +316,8 @@ class Wrapper extends React.Component<IProperties, IState> {
 
         {/* There is component */}
         <RenderErrorCatcher>
-          {list ?
-            <Comp data={this.props.content[this.props.position].data} list={list} />
+          {navigations ?
+            <Comp data={this.props.content[this.props.position].data} navigations={navigations} />
             :
             <Comp data={this.props.content[this.props.position].data} />
           }

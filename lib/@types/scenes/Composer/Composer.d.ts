@@ -150,7 +150,7 @@ declare class Composer extends React.Component<IProperties, IState> {
      * @param {string | string[]} names one name or array of names
      * @return {Promise<void>}
      */
-    enablePlugins(names: string | string[]): Promise<void>;
+    enablePlugins(names: string | string[], client?: any): Promise<void>;
     /**
      * Set name
      *

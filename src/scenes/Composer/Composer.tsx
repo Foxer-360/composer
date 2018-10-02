@@ -451,15 +451,29 @@ class Composer extends React.Component<IProperties, IState> {
    * @param {string | string[]} names one name or array of names
    * @return {Promise<void>}
    */
-  public enablePlugins(names: string | string[]): Promise<void> {
+  public enablePlugins(names: string | string[], client?: any): Promise<void> { // tslint:disable-line:no-any
     if (!Array.isArray(names)) {
       names = [ names ];
     }
 
+    names = names.filter((name: string) => {
+      const index = this.state.plugins.indexOf(name);
+
+      if (index > -1) {
+        if (this.pluginsInstances[name]) {
+          this.pluginsInstances[name].resetPlugin(this.props.context, null);
+        }
+        return false;
+      }
+
+      return true;
+    });
+
+    // Filter already existing plugins
     names.forEach((name: string) => {
       const Plugin = this.props.pluginService.getPlugin(name);
       if (Plugin) {
-        this.pluginsInstances[name] = new Plugin(this.props.context);
+        this.pluginsInstances[name] = new Plugin(this.props.context, null, client);
         this.props.context.addListener(name, () => {
           this.forceUpdate();
         });
