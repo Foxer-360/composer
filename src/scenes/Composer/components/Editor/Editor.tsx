@@ -1,5 +1,6 @@
 import { getObjectFromContent, IComponent, IContent } from '@foxer360/delta';
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import { Alert, Card, Col, Icon, Row } from 'antd';
 import * as React from 'react';
 import {
@@ -27,6 +28,8 @@ export interface IProperties {
   me?: string; // My ID used in editors and locks
 
   layouts?: boolean;
+
+  context: Context;
 
   selectedComponent: number | null;
   updateComponent: (data: ILooseObject) => void;
@@ -164,6 +167,7 @@ class Editor extends React.Component<IProperties, IState> {
                 removeContainer={this.props.removeContainer}
                 lockContainer={this.props.lockContainer}
                 layouts={this.props.layouts}
+                context={this.props.context}
               />
             </Card>
           </Col>

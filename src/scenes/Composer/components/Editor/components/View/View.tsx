@@ -1,4 +1,5 @@
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import * as React from 'react';
 import {
   IComponentsServiceLikeClass,
@@ -25,6 +26,8 @@ export interface IProperties {
   sourceData: ILooseObject | null;
 
   layouts?: boolean;
+
+  context: Context;
 
   onEdit: (id: number) => Promise<boolean>;
   onRemove: (id: number) => void;
@@ -85,6 +88,7 @@ class View extends React.Component<IProperties, {}> {
             lockContainer={this.props.lockContainer}
             layouts={this.props.layouts}
             locked={this.props.content.lock}
+            context={this.props.context}
           />
           {
             <div

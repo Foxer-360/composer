@@ -1,4 +1,5 @@
 import { ILooseObject } from '../../../../../../types';
+import { Context } from '../../../../../../utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../../../Composer';
 export interface IProperties {
@@ -9,6 +10,7 @@ export interface IProperties {
     isThereSource: boolean;
     sourceData: ILooseObject | null;
     layouts?: boolean;
+    context: Context;
     onEdit: (id: number) => Promise<boolean>;
     onRemove: (id: number) => void;
     dragStart: (data: ILooseObject) => void;

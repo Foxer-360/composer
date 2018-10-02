@@ -1,4 +1,5 @@
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../../../../../Composer';
 import Slot from '../Slot';
@@ -20,6 +21,8 @@ export interface IProperties {
 
   layouts?: boolean;
   locked: boolean;
+
+  context: Context;
 
   moveComponent: (id: number, position: number) => void;
   addComponent: (data: ILooseObject, position: number, container: string) => Promise<boolean>;
@@ -116,6 +119,7 @@ class Container extends React.Component<IProperties, {}> {
                       editors={this.props.editors}
                       locks={this.props.locks}
                       me={this.props.me}
+                      context={this.props.context}
                     />
                   </Slot>
                   <Slot

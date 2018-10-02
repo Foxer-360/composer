@@ -1,4 +1,5 @@
 import { ILooseObject } from '@source/types';
+import { Context } from './context';
 
 /**
  * Simple method to deep copy some object
@@ -36,6 +37,7 @@ const getImgUrl = (data: ILooseObject) => {
 };
 
 export {
+  Context,
   deepCopy,
   deepEqual,
   getImgUrl,

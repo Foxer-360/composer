@@ -1,4 +1,5 @@
 import { ILooseObject } from '../../../../../../../../types';
+import { Context } from '../../../../../../../../utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass, IEditorInfo, ILockInfo } from '../../../../../../Composer';
 export interface IProperties {
@@ -11,6 +12,7 @@ export interface IProperties {
     editors?: IEditorInfo[];
     locks?: ILockInfo[];
     me?: string;
+    context: Context;
     onEdit: (id: number) => Promise<boolean>;
     onRemove: (id: number) => void;
     dragStart: (data: ILooseObject) => void;
@@ -25,6 +27,7 @@ export interface IState {
  * drive all component behiever, like editing or re-rendering
  */
 declare class Wrapper extends React.Component<IProperties, IState> {
+    private contextPropertiesHashes;
     constructor(props: IProperties);
     componentWillReceiveProps(nextProps: IProperties): void;
     shouldComponentUpdate(nextProps: IProperties, nextState: IState): boolean;

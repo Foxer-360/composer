@@ -1,5 +1,6 @@
 import { IContent, IOperation } from '@foxer360/delta';
 import { ILooseObject } from '../../types';
+import { Context } from '../../utils';
 import * as React from 'react';
 export interface IComponentObject {
     id: number;
@@ -21,14 +22,10 @@ export interface IComponentsServiceLikeClass {
     getComponentResource(type: string): ILooseObject;
     getForm(type: string): typeof React.Component;
 }
-declare class PluginComponent extends React.Component<{
-    onChange: (data: ILooseObject) => void;
-    initData: ILooseObject;
-}, {}> {
-}
 export interface IPluginServiceLikeClass {
     getPluginTabName(name: string): string;
-    getPluginComponent(name: string): typeof PluginComponent;
+    getPluginComponent(name: string): typeof React.Component;
+    getPlugin(name: string): any;
 }
 export interface IData {
     content: IContent;
@@ -57,6 +54,7 @@ export interface IProperties {
     locks?: ILockInfo[];
     me?: string;
     layouts?: boolean;
+    context: Context;
     onComponentAdded?: (data: ILooseObject) => void;
     onComponentTryAdd?: (data: ILooseObject) => void;
     onComponentRemoved?: (id: number) => void;
@@ -92,6 +90,7 @@ declare class Composer extends React.Component<IProperties, IState> {
     private RESET_STATE;
     private DEBUG;
     private spinner;
+    private pluginsInstances;
     private delta;
     /**
      * Component class constructor
@@ -151,7 +150,7 @@ declare class Composer extends React.Component<IProperties, IState> {
      * @param {string | string[]} names one name or array of names
      * @return {Promise<void>}
      */
-    enablePlugins(names: string | string[]): Promise<void>;
+    enablePlugins(names: string | string[], client?: any): Promise<void>;
     /**
      * Set name
      *

@@ -1,4 +1,5 @@
 import { ILooseObject } from '../types';
+import { Context } from './context';
 /**
  * Simple method to deep copy some object
  *
@@ -21,4 +22,4 @@ declare const deepEqual: (a: ILooseObject, b: ILooseObject) => boolean;
  * @param {ILooseObject} data
  */
 declare const getImgUrl: (data: ILooseObject) => string;
-export { deepCopy, deepEqual, getImgUrl, };
+export { Context, deepCopy, deepEqual, getImgUrl, };
