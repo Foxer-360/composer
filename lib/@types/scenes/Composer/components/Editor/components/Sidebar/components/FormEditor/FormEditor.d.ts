@@ -1,4 +1,5 @@
 import { ILooseObject } from '../../../../../../../../types';
+import { Context } from '../../../../../../../../utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass } from '../../../../../../Composer';
 export interface IProperties {
@@ -8,6 +9,7 @@ export interface IProperties {
     onSave: () => Promise<boolean>;
     onCancel: () => Promise<boolean>;
     componentsService: IComponentsServiceLikeClass;
+    context: Context;
 }
 declare class FormEditor extends React.Component<IProperties, {}> {
     render(): JSX.Element;

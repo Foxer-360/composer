@@ -1,4 +1,5 @@
 import { ILooseObject } from '@source/types';
+import { Context } from '@source/utils';
 import * as React from 'react';
 import { IComponentsServiceLikeClass } from '../../../../Composer';
 import ComponentSelector from './components/ComponentSelector';
@@ -20,6 +21,8 @@ export interface IProperties {
   onCancel: () => Promise<boolean>;
 
   componentsService: IComponentsServiceLikeClass;
+
+  context: Context;
 
   dragStart: (data: ILooseObject) => void;
   dragEnd: () => void;
@@ -47,6 +50,7 @@ class Sidebar extends React.Component<IProperties, {}> {
               onSave={this.props.onSave}
 
               componentsService={this.props.componentsService}
+              context={this.props.context}
             />
           :
             <ComponentSelector
