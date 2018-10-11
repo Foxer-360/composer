@@ -211,8 +211,6 @@ class Wrapper extends React.Component<IProperties, IState> {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
-    // tslint:disable-next-line:no-console
-
     canvas.width = 300;
     canvas.height = 60;
 
@@ -282,11 +280,17 @@ class Wrapper extends React.Component<IProperties, IState> {
       });
     }
 
+    // tslint:disable-next-line:no-any
+    let compProps: any = {};
     let navigations = this.props.context.readProperty('navigations');
     // tslint:disable-next-line:no-console
     console.log('{CONTEXT}', this.props.context);
-    if (!navigations || navigations === undefined) {
-      navigations = false;
+    if (navigations && navigations !== undefined) {
+      compProps.navigations = navigations;
+    }
+    let languages = this.props.context.readProperty('languages');
+    if (languages && languages !== undefined) {
+      compProps.languages = languages;
     }
 
     return (
@@ -316,11 +320,10 @@ class Wrapper extends React.Component<IProperties, IState> {
 
         {/* There is component */}
         <RenderErrorCatcher>
-          {navigations ?
-            <Comp data={this.props.content[this.props.position].data} navigations={navigations} />
-            :
-            <Comp data={this.props.content[this.props.position].data} />
-          }
+          <Comp
+            data={this.props.content[this.props.position].data}
+            {...compProps}
+          />
         </RenderErrorCatcher>
       </div>
     );
