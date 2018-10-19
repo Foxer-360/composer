@@ -37,6 +37,9 @@ class LightweightComposer extends React.Component<IProperties, {}> {
   }
 
   public render(): JSX.Element {
+    // tslint:disable-next-line:no-console
+    console.log('LightweightComposer props', this.props);
+
     return (
       <Container
         content={this.props.content.content}
