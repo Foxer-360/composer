@@ -37,9 +37,6 @@ class Container extends React.Component<IProperties, {}> {
         const languages = this.props.context.readProperty('languages');
         const languageCode = this.props.context.readProperty('languageCode');
 
-        // tslint:disable-next-line:no-console
-        console.log('Container languageCode', languageCode);
-
         return (
           <Comp
             data={node.data}
