@@ -4,6 +4,7 @@ import { IFormSchema } from '../../FormBuilder';
 interface IArrayInputsProps {
     title: string;
     name: string;
+    language: string;
     data: ILooseObject[];
     items: IFormSchema;
     onChange: (e: React.ChangeEvent | any) => void;
